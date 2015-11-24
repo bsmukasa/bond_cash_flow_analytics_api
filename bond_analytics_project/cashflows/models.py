@@ -25,11 +25,11 @@ class Bond(models.Model):
         in other nodes.
     """
     name = models.CharField(max_length=128)
-    coupon_payment_frequency = models.CharField(max_length=100)
+    coupon_payment_frequency = models.IntegerField()
     face_value = models.DecimalField(max_digits=20, decimal_places=2)
     maturity = models.DecimalField(max_digits=20, decimal_places=4)
     coupon_rate = models.DecimalField(max_digits=5, decimal_places=4)
-    yield_to_maturity_type = models.CharField(max_length=100)
+    yield_to_maturity_type = models.IntegerField()
     bond_price = models.DecimalField(max_digits=10, decimal_places=2)
     discount_rate_per_period = models.DecimalField(max_digits=10, decimal_places=4)
     yield_to_maturity = models.DecimalField(max_digits=5, decimal_places=4)
