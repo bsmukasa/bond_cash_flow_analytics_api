@@ -48,6 +48,20 @@ class BondValuationYield(View):
 
 
 def discount_rate_per_period(nper, pv, fv, coupon):
+    """ Calculates the discount rate per period of a bond.
+
+    Using the numpy.pmt financial function the monthly payment against principal plus interest is determined.
+    Then the numpy.rate financial function is used to calculate the rate of interest per period.
+
+    Args:
+        nper: The number of payment periods in an annuity.
+        pv: The present value or current bond price.
+        fv: The future value or face value of the bond.
+        coupon: he stated annual interest rate.
+
+    Returns:
+        The discount rate per period as a float.
+    """
     rate = coupon / 100 / 12
     pmt = np.pmt(rate, nper, pv, fv)
 
