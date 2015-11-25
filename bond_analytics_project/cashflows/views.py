@@ -5,7 +5,7 @@ from bond_analytics_project.cashflows.models import Bond
 
 
 # Create your views here.
-class BondValuationYield(View):
+class BondValuation(View):
     model = Bond
 
     def post(self, request):
