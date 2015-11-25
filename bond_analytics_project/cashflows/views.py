@@ -9,6 +9,21 @@ class BondValuationYield(View):
     model = Bond
 
     def post(self, request):
+        """ Conducts bond valuation.
+
+        Args:
+            request: Request which must include the following:
+                * name
+                * coupon_payment_frequency
+                * face_value
+                * maturity
+                * coupon_rate
+                * yield_to_maturity_type
+                * bond_price
+
+        Returns:
+            JsonResponse dictionary with a status and message.
+        """
         request_dict = request.POST.dict()
         new_bond = self.model(
             name=request_dict['name'],
