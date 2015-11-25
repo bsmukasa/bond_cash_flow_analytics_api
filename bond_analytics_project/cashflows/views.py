@@ -19,7 +19,6 @@ class BondValuationYield(View):
                 * maturity
                 * coupon_rate
                 * yield_to_maturity_type
-                * bond_price
 
         Returns:
             JsonResponse dictionary with a status and message.
@@ -32,20 +31,33 @@ class BondValuationYield(View):
             maturity=request_dict['maturity'],
             coupon_rate=request_dict['coupon_rate'],
             yield_to_maturity_type=request_dict['yield_to_maturity_type'],
-            bond_price=request_dict['bond_price']
         )
 
-        period_discount_rate = discount_rate_per_period(
+        periodic_coupon_payment = np.pmt(
+            rate=request_dict['coupon_rate'] / 100 / 12,
             nper=request_dict['maturity'],
             pv=request_dict['bond_price'],
-            fv=request_dict['face_value'],
-            coupon=request_dict['coupon_rate']
+            fv=request_dict['face_value']
         )
 
-        yield_maturity = yield_to_maturity(
+        new_bond.discount_rate_per_period = np.rate(
+            nper=request_dict['maturity'],
+            pmt=periodic_coupon_payment,
+            pv=request_dict['bond_price'],
+            fv=request_dict['face_value'],
+        )
+
+        new_bond.yield_to_maturity = yield_to_maturity(
             yield_to_maturity_type=request_dict['yield_to_maturity_type'],
             period_discount_rate=period_discount_rate,
             coupon_payment_frequency=request_dict['coupon_payment_frequency']
+        )
+
+        new_bond.bond_price = np.pv(
+            rate=period_discount_rate,
+            nper=request_dict['maturity'],
+            pmt=periodic_coupon_payment,
+            fv=request_dict['face_value']
         )
 
         new_bond.save()
@@ -53,25 +65,25 @@ class BondValuationYield(View):
         return JsonResponse({'status': 'PASS', 'message': 'Bond Saved'})
 
 
-def discount_rate_per_period(nper, pv, fv, coupon):
-    """ Calculates the discount rate per period of a bond.
-
-    Using the numpy.pmt financial function the monthly payment against principal plus interest is determined.
-    Then the numpy.rate financial function is used to calculate the rate of interest per period.
-
-    Args:
-        nper: The number of payment periods in an annuity.
-        pv: The present value or current bond price.
-        fv: The future value or face value of the bond.
-        coupon: The stated annual interest rate.
-
-    Returns:
-        The discount rate per period as a float.
-    """
-    rate = coupon / 100 / 12
-    pmt = np.pmt(rate, nper, pv, fv)
-
-    return np.rate(nper, pmt, pv, fv)
+# def discount_rate_per_period(nper, pv, fv, coupon):
+#     """ Calculates the discount rate per period of a bond.
+#
+#     Using the numpy.pmt financial function the monthly payment against principal plus interest is determined.
+#     Then the numpy.rate financial function is used to calculate the rate of interest per period.
+#
+#     Args:
+#         nper: The number of payment periods in an annuity.
+#         pv: The present value or current bond price.
+#         fv: The future value or face value of the bond.
+#         coupon: The stated annual interest rate.
+#
+#     Returns:
+#         The discount rate per period as a float.
+#     """
+#     rate = coupon / 100 / 12
+#     pmt = np.pmt(rate, nper, pv, fv)
+#
+#     return np.rate(nper, pmt, pv, fv)
 
 
 def yield_to_maturity(yield_to_maturity_type, period_discount_rate, coupon_payment_frequency):
