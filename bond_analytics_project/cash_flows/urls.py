@@ -2,8 +2,8 @@ from django.conf.urls import include, url
 
 from rest_framework.routers import DefaultRouter
 
-from bond_analytics_project.cashflows import viewsets
-from bond_analytics_project.cashflows.views import BondValuation
+from bond_analytics_project.cash_flows import viewsets
+from bond_analytics_project.cash_flows.views import BondValuation
 
 router = DefaultRouter()
 router.register(r'bonds', viewsets.BondViewSet)

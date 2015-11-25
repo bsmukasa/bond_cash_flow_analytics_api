@@ -1,7 +1,7 @@
 from rest_framework.viewsets import ModelViewSet
 
-from bond_analytics_project.cashflows.models import Bond
-from bond_analytics_project.cashflows.serializers import BondSerializer
+from bond_analytics_project.cash_flows.models import Bond
+from bond_analytics_project.cash_flows.serializers import BondSerializer
 
 
 class BondViewSet(ModelViewSet):

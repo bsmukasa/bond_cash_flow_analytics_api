@@ -1,7 +1,7 @@
 import numpy as np
 from django.http import JsonResponse
 from django.views.generic import View
-from bond_analytics_project.cashflows.models import Bond
+from bond_analytics_project.cash_flows.models import Bond
 
 
 # Create your views here.

@@ -1,5 +1,5 @@
 from rest_framework.serializers import ModelSerializer
-from bond_analytics_project.cashflows.models import Bond
+from bond_analytics_project.cash_flows.models import Bond
 
 
 class BondSerializer(ModelSerializer):
