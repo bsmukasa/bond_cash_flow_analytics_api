@@ -14,7 +14,7 @@ class Bond(models.Model):
         coupon_payment_frequency: Whether the coupon is paid annually or semi-annually.
         face_value: The principal of the bond to be repaid at the end of the maturity period.
         maturity: Number of periods to maturity is related to the Coupon Payment Frequency.
-        coupon_rate: The stated annual interest rate payments for a Bond.
+        coupon_rate: The stated annual interest rate for a Bond.
         yield_to_maturity_type: Whether the annual rate is the Annual Percentage Rate or the Effective Annual Rate.
         bond_price: The current price of the bond in the market.
         discount_rate_per_period: Yield to Maturity is typically quoted annually. This is the exact rate per period.
