@@ -30,3 +30,10 @@ class BondValuationYield(View):
         new_bond.save()
 
         return JsonResponse({'status': 'PASS', 'message': 'Bond Saved'})
+
+
+def discount_rate_per_period(nper, pv, fv, coupon):
+    rate = coupon / 100 / 12
+    pmt = np.pmt(rate, nper, pv, fv)
+
+    return np.rate(nper, pmt, pv, fv)
